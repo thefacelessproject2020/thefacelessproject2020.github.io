@@ -1,4 +1,4 @@
-//decalrar las variables de nuestra app. 
+//Declarar las variables de nuestra app. 
 var scene, camera, renderer, clock, deltaTime, totalTime;
 
 var arToolkitSource, arToolkitContext;
@@ -6,6 +6,9 @@ var arToolkitSource, arToolkitContext;
 var mesh1;
 var mesh2;
 var mesh3;
+let mesh4;
+
+var video = document.getElementById('video');
 
 var markerRoot1, markerRoot2, markerRoot3, markerRoot4, markerRoot5, markerRoot6, markerRoot7;
 
@@ -500,10 +503,32 @@ new THREE.MTLLoader()
 //////////////// VIDEO ///////////////////
 //////////////////////////////////////////
 
+let geoVideo = new THREE.PlaneBufferGeometry(4,2,4,4); //molde geometria
 
+//////CREACION VIDEO///////////////
 
+video.muted= true;
+video.pause();
+let texture =  new THREE.VideoTexture(video);
+texture.minFilter = THREE.LinearFilter;
+texture.magFilter= THREE.LinearFilter;
+texture.format =  THREE.RGBFormat;
+
+let materialVideo = new THREE.MeshBasicMaterial(
+    {
+
+        map:texture
+}
+);
+
+mesh4 = new THREE.Mesh(geoVideo, materialVideo);
+mesh4.rotation.x = -Math.PI/2;
+
+markerRoot6.add(mesh4);
 
 }
+
+
 
 function update() {
     //actualiza contenido de nuestra app AR
@@ -522,4 +547,11 @@ function animate() {
     totalTime += deltaTime; // totalTime =  totalTime + deltaTime 
     update();
     render();
+    video.play();
+}
+
+function playVideo(){
+    let video = document.getElementById('video');
+    video.muted=true;
+	//video.play();
 }
